@@ -10,8 +10,14 @@
 ---
 
 ## 📸 Screenshots
+
+###Login Page
 > ![Login Page](client/src/assets/screenshots/login.png)
-> ![Home Page](client/src/assets/screenshots/home.page)
+
+### Home Page
+> ![Home Page](client/src/assets/screenshots/home.png)
+
+### Select Mood Page
 > ![FeelingMood Page](client/src/assets/screenshots/feeling.png)
 
 ---
