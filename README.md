@@ -10,9 +10,9 @@
 ---
 
 ## 📸 Screenshots
-> Add screenshots here when your UI is ready  
-> Example:
-> ![Home Page](screenshots/home.png)
+> ![Login Page](screenshots/login.png)
+> ![Home Page](screenshots/home.page)
+> ![FeelingMood Page](screenshots/feeling.png)
 
 ---
 
@@ -47,13 +47,6 @@
 
 ---
 
-## 🧪 Dataset
-
-- `278k_labelled_uri.csv`: Labeled music dataset used for training/testing mood classifiers
-- Features include: tempo, energy, valence, loudness, etc.
-
----
-
 ## 🔐 Environment Variables
 
 Create a `.env` file in `server/` directory with the following:
@@ -61,3 +54,4 @@ Create a `.env` file in `server/` directory with the following:
 ```env
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
+MONGO_URI=your_mongo_uri
