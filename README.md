@@ -10,9 +10,9 @@
 ---
 
 ## 📸 Screenshots
-> ![Login Page](screenshots/login.png)
-> ![Home Page](screenshots/home.page)
-> ![FeelingMood Page](screenshots/feeling.png)
+> ![Login Page](assets/screenshots/login.png)
+> ![Home Page](assets/screenshots/home.page)
+> ![FeelingMood Page](assets/screenshots/feeling.png)
 
 ---
 
