@@ -11,13 +11,13 @@
 
 ## 📸 Screenshots
 
-###Login Page
+### 🔐 Login Page
 > ![Login Page](client/src/assets/screenshots/login.png)
 
-### Home Page
+### 🏠 Home Page
 > ![Home Page](client/src/assets/screenshots/home.png)
 
-### Select Mood Page
+### 😊 Feeling/Mood Page
 > ![FeelingMood Page](client/src/assets/screenshots/feeling.png)
 
 ---
@@ -61,3 +61,10 @@ Create a `.env` file in `server/` directory with the following:
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 MONGO_URI=your_mongo_uri
+
+```
+
+---
+
+## License
+[MIT](LICENSE)
