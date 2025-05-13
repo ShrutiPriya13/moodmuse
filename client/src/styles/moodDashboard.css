@@ -1,4 +1,4 @@
-.dashboard-container {
+/*.dashboard-container {
   padding: 20px;
   color: white;
   border-radius: 8px;
@@ -81,4 +81,160 @@
 .dashboard-section textarea:focus {
   outline: none;
   border-color: #888;
+}
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Jacquard+12&display=swap");
+
+
+.container {
+  background-color: #d6bebe;
+  color: #ff1212;
+ 
+}
+
+.cont1{
+  position: relative;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.heading {
+  position: sticky;
+  font-size: 120px;
+  font-family: 'Limelight', cursive;
+  margin-top: 20px;
+  z-index: 1;
+  top: 0;
+}
+
+.head-image {
+  position: absolute;
+  z-index: 2;
+  height: 500px;
+  top: 150px;
+}
+
+.head-image img {
+  width: 500px;
+  height: 500px;
+  object-fit: contain;
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+  margin-left: 40px;
+ 
+}
+
+.cont2 {
+  position: relative;
+  top: 290px;
+  background-color: #d6bebe;
+  height: 800px;
+  display: flex;
+  overflow: visible;
+}
+
+.box1 {
+  width: 900px;
+  height: 800px;
+ 
+  color: black;
+  font-family: 'Jacquard 12';
+  line-height: 40px;
+ 
+}
+
+.box1 p {
+  
+  padding-left: 30px;
+  font-size: 32px;
+  z-index: 2; /* ensures text stays above */
+}
+
+.right-boxes {
+  display: flex;
+  flex-direction: column;
+  width: 550px;
+  height: 800px;
+  background-image: url('/src/assets/images/rightBox.png');
+  background-size: cover;
+  gap: 20px;
+ 
+}
+
+@keyframes sway {
+  0% {
+    transform: scale(1.03) rotate(-1deg);
+  }
+  50% {
+    transform: scale(1.05) rotate(1deg);
+  }
+  100% {
+    transform: scale(1.03) rotate(-1deg);
+  }
+}
+
+.right-box1 img{
+  width: 500px;
+  height: 300px;
+  position: relative;
+  left: -200px;/* overlaps onto the red box */
+  margin-right: 30px;
+  border-radius: 12px;
+  margin-top: -60px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: sway 2s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+ 
+}
+
+.right-box1 img:hover {
+  animation: none;
+  transform: scale(1.1) rotate(-1deg);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.2) saturate(1.2);
+}
+
+.right-box2 img{
+  width: 500px;
+  height: 300px;
+  position: relative;
+  left: -600px;/* overlaps onto the red box */
+  border-radius: 12px;
+  margin-top: -60px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: sway 2s ease-in-out infinite;
+  transition: transform 0.5s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+ 
+}
+
+.right-box2 img:hover {
+  animation: none;
+  transform: scale(1.1) rotate(1deg);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.2) saturate(1.2);
+}
+
+.right-box3 img{
+  width: 500px;
+  height: 300px;
+  position: relative;
+  left: -200px;/* overlaps onto the red box */
+  border-radius: 12px;
+  margin-top: -60px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: sway 2s ease-in-out infinite;
+  transition: transform 0.5s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+ 
+}
+
+.right-box3 img:hover {
+  animation: none;
+  transform: scale(1.1) rotate(-1deg);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.2) saturate(1.2);
 }

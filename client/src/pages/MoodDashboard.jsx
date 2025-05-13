@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';  // useNavigate instead of useHistory
 import '../styles/moodDashboard.css';
+import headImage from '../assets/images/headImage.avif';  
+import musicImage from '../assets/images/musicImage.png'; 
+import journalImage from '../assets/images/journalImage.png';
+import socialImage from '../assets/images/socialImage.png';
 
 const moodContent = {
   sad: {
@@ -57,41 +61,88 @@ const MoodDashboard = () => {
   const { moodName } = useParams();
   const moodKey = moodName ? moodName.toLowerCase() : null;
   const mood = moodKey ? moodContent[moodKey] : null;
-  const navigate = useNavigate();  // useNavigate instead of useHistory
+  const navigate = useNavigate();
+  
+   useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const image = document.querySelector('.head-image img');
+      if (image) {
+        image.style.transform = `translate(${scrollY * 0.3}px, ${-scrollY * 0.2}px)`;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   if (!mood) {
     return <h2 style={{ textAlign: 'center' }}>Unknown Mood 😕</h2>;
   }
 
-  const handleMusicClick = () => {
-    // Redirect to Spotify OAuth flow (you will replace this with actual implementation)
-    const redirectUri = 'http://localhost:3000/spotify/callback';
-    const spotifyAuthUrl = `https://accounts.spotify.com/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=${redirectUri}&scope=user-library-read`;
-    window.location.href = spotifyAuthUrl;
-  };
-
   return (
-    <div className="dashboard-container" style={{ backgroundColor: mood.color }}>
-      <h1 className="dashboard-title">
-        You're feeling {moodName.charAt(0).toUpperCase() + moodName.slice(1)} {mood.emoji}
-      </h1>
-      <p className="dashboard-message">{mood.message}</p>
-
-      <div className="dashboard-section">
-        <h2>Songs You Might Like 🎵</h2>
-        <ul>
-          {mood.songs.map((song, index) => (
-            <li key={index}>{song}</li>
-          ))}
-        </ul>
+    <div className="container">
+      <div className="cont1">
+        <div className="heading">
+          BECAUSE WHAT YOU FEEL MATTERS.
+        </div>
+        <div className="head-image">
+          <img src={headImage} alt="img" />
+        </div>
       </div>
 
-      {/* Options for Music, Journal, and Community Wall */}
-      <div className="dashboard-options">
-        <h3>What would you like to do?</h3>
-        <button onClick={handleMusicClick}>Music</button>
-        <button>Journal</button>
-        <button>Community Wall</button>
+      <div className="cont2">
+        <div className="box1">
+          <p>
+          In a world that moves fast, music and journaling offer a place to pause — a rhythm for the 
+          heart and a voice for the soul. Whether it's a song that speaks what words can't, or a journal 
+          entry that untangles the chaos within, these forms of expression are quiet revolutions of 
+          healing. They don't just capture what you feel — they help you feel it fully, and let it go.
+        
+          Let the rhythm speak when words fall short. Music echoes what we hold inside — raw, real, 
+          unfiltered. Pair it with the quiet power of journaling, and you get a space where healing 
+          isn't forced, it flows. This is more than escape. It's expression. It's release. 
+          It's how you find your way back to yourself.
+          <br />
+          This isn't just music. It's a mirror. This isn't just journaling. It's self-rescue. Let every 
+          rhythm and every word bring you closer to calm.
+          
+          Some days, the weight we carry is invisible but loud. It's in the silences, in the way we 
+          pause before speaking, in the songs we keep on repeat. Writing gives those feelings a place 
+          to land. Music gives them wings. Together, they become a bridge back to ourselves—a soft 
+          reminder that even when we're quiet, we're still listening, still healing.
+          When chaos hums in your chest, let a melody answer back. Write it down. Feel it out. Heal 
+          through the noise
+          </p>
+        </div>
+        <div className="right-boxes">
+          <div className="right-box1" onClick={async () => {
+            try {
+              // Fetch ngrok URL from server
+              const response = await fetch('http://localhost:5000/api/ngrok-url');
+              const ngrokUrl = await response.text();
+              
+              const clientId = '10e5eae99db64c9697b7bf065e098b80';
+              const redirectUri = encodeURIComponent(`${ngrokUrl}/#/recommended-songs`);
+              const scope = encodeURIComponent('user-read-private user-read-email user-top-read user-read-recently-played user-read-playback-state');
+              const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
+              window.location.href = authUrl;
+            } catch (error) {
+              console.error('Error getting ngrok URL:', error);
+              alert('Failed to get ngrok URL. Please try again.');
+            }
+          }}>
+            <img src={musicImage} alt="" />
+          </div>
+         
+          <div className="right-box2">
+            <img src={journalImage} alt="" />
+          </div>
+          <div className="right-box3">
+            <img src={socialImage} alt="" />
+          </div>
+        </div>
+
       </div>
     </div>
   );

@@ -20,9 +20,9 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "/auth/google/callback",
-}, 
-async (accessToken, refreshToken, profile, done) => {
+  callbackURL: "http://localhost:5000/auth/google/callback",
+  redirectUri: "http://localhost:3000/dashboard"
+}, async (accessToken, refreshToken, profile, done) => {
   const existingUser = await User.findOne({ googleId: profile.id });
   
   if (existingUser) {

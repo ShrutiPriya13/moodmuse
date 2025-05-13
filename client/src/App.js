@@ -1,26 +1,54 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-//import Header from './components/Header';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import FeelingPage from './pages/FeelingPage';
 import MoodDashboard from './pages/MoodDashboard';
-//import CommunityWall from './pages/CommunityWall';
-//import './styles/common.css';
+import RecommendedSongs from './pages/RecommendedSongs';
 
 function App() {
   return (
-    <Router>
-   
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/FeelingPage" element={<FeelingPage />} />
-        <Route path="/mood/:moodName" element={<MoodDashboard />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/FeelingPage"
+            element={
+              <ProtectedRoute>
+                <FeelingPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mood/:moodName"
+            element={
+              <ProtectedRoute>
+                <MoodDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/recommended-songs"
+            element={
+              <ProtectedRoute>
+                <RecommendedSongs />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
 export default App;
-

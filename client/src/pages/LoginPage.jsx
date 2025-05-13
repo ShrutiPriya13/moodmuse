@@ -5,24 +5,34 @@ import logo from '../assets/images/logo.png';
 import image1 from '../assets/images/image1.jpeg';
 import google from '../assets/images/google.png';
 
+import { useAuth } from '../contexts/AuthContext';
+
 function LoginPage() {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
   
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (email.trim()) {
-      // Here you can add an API call or auth logic
-      navigate('/dashboard');
+      try {
+        // Here you should make an API call to your server to authenticate
+        // For now, we'll simulate a successful login
+        const userData = { email, name: 'User' };
+        login(userData);
+        navigate('/dashboard');
+      } catch (error) {
+        console.error('Login failed:', error);
+        alert('Login failed. Please try again.');
+      }
     } else {
       alert('Please enter a valid email.');
     }
   };
 
   const handleGoogleLogin = () => {
-    // Here you can integrate Google OAuth (e.g., Firebase or your backend)
-    // Redirect to OAuth login (e.g., Google)
-    window.location.href = 'http://localhost:5000/auth/google';
-   
+    // Use consistent redirect URI
+    const redirectUri = 'http://localhost:3000/dashboard';
+    window.location.href = `http://localhost:5000/auth/google?redirect_uri=${redirectUri}`;
   };
 
   return (
