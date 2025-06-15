@@ -82,6 +82,7 @@ const MoodDashboard = () => {
 
   return (
     <div className="container">
+      
       <div className="cont1">
         <div className="heading">
           BECAUSE WHAT YOU FEEL MATTERS.
@@ -116,30 +117,15 @@ const MoodDashboard = () => {
           </p>
         </div>
         <div className="right-boxes">
-          <div className="right-box1" onClick={async () => {
-            try {
-              // Fetch ngrok URL from server
-              const response = await fetch('http://localhost:5000/api/ngrok-url');
-              const ngrokUrl = await response.text();
-              
-              const clientId = '10e5eae99db64c9697b7bf065e098b80';
-              const redirectUri = encodeURIComponent(`${ngrokUrl}/#/recommended-songs`);
-              const scope = encodeURIComponent('user-read-private user-read-email user-top-read user-read-recently-played user-read-playback-state');
-              const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
-              window.location.href = authUrl;
-            } catch (error) {
-              console.error('Error getting ngrok URL:', error);
-              alert('Failed to get ngrok URL. Please try again.');
-            }
-          }}>
-            <img src={musicImage} alt="" />
+          <div className="right-box1" onClick={() => navigate(`/mood/${moodKey}/music`)}>
+            <img src={musicImage} alt="Music" />
           </div>
          
-          <div className="right-box2">
-            <img src={journalImage} alt="" />
+          <div className="right-box2" onClick={() => navigate(`/mood/${moodKey}/journal`)}>
+            <img src={journalImage} alt="Journal" />
           </div>
-          <div className="right-box3">
-            <img src={socialImage} alt="" />
+          <div className="right-box3" onClick={() => navigate(`/mood/${moodKey}/community`)}>
+            <img src={socialImage} alt="Community Wall" />
           </div>
         </div>
 

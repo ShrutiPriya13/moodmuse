@@ -26,6 +26,7 @@ const FeelingPage = () => {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [showArrow, setShowArrow] = useState(true);
+  const [firstName, setFirstName] = useState('User'); // Default to 'User'
 
   const handleMoodClick = (mood) => {
     navigate(`/mood/${mood.toLowerCase()}`);
@@ -45,6 +46,22 @@ const FeelingPage = () => {
   };
 
   useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        // Assuming user object has a 'name' property like 'John Doe'
+        // Or it might be 'displayName' from Google. Adjust if necessary.
+        const nameParts = user.name ? user.name.split(' ') : (user.displayName ? user.displayName.split(' ') : []);
+        if (nameParts.length > 0) {
+          setFirstName(nameParts[0]);
+        }
+      }
+    } catch (error) {
+      console.error('Error retrieving user name from localStorage:', error);
+      // Keep default name 'User'
+    }
+
     const el = scrollRef.current;
     if (el) el.addEventListener('scroll', handleScroll);
     return () => {
@@ -70,7 +87,7 @@ const FeelingPage = () => {
             onClick={() => handleMoodClick(item.mood)}
           >
             <div className="intro">
-                <div className="h2">Hey Suvi!</div>
+                <div className="h2">Hey {firstName}!</div>
                 <p>How are you feeling <br />this day?</p>
             </div>
 

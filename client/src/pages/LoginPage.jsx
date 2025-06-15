@@ -5,20 +5,20 @@ import logo from '../assets/images/logo.png';
 import image1 from '../assets/images/image1.jpeg';
 import google from '../assets/images/google.png';
 
-import { useAuth } from '../contexts/AuthContext';
-
 function LoginPage() {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
-  
+
   const handleContinue = async () => {
     if (email.trim()) {
       try {
-        // Here you should make an API call to your server to authenticate
-        // For now, we'll simulate a successful login
-        const userData = { email, name: 'User' };
-        login(userData);
+        // For manual email login, we'll simulate a user object
+        const user = { 
+          email: email,
+          name: 'User',
+          googleId: 'manual-' + email // Add a fake googleId to match the expected format
+        };
+        localStorage.setItem('user', JSON.stringify(user));
         navigate('/dashboard');
       } catch (error) {
         console.error('Login failed:', error);
@@ -30,35 +30,46 @@ function LoginPage() {
   };
 
   const handleGoogleLogin = () => {
-    // Use consistent redirect URI
-    const redirectUri = 'http://localhost:3000/dashboard';
-    window.location.href = `http://localhost:5000/auth/google?redirect_uri=${redirectUri}`;
-  };
+    try {
+      // Clear any existing session
+      localStorage.removeItem('user');
+      
+      // Redirect to Google OAuth
+      const authUrl = 'http://localhost:5000/auth/google';
+      window.location.href = authUrl;
+    } catch (error) {
+      console.error('Error initiating Google login:', error);
+      alert('Failed to initiate Google login. Please try again.');
+    }
+  }; 
 
   return (
     <div className="login-container">
       <div className="login-left">
         <img src={logo} alt="MoodMuse Logo" className="login-logo" />
-        <h2 className="welcome-heading">Welcome to MoodMuse —<br />Let your mood shape your moment.</h2>
+        <h2 className="welcome-heading">
+          Welcome to MoodMuse —<br />Let your mood shape your moment.
+        </h2>
 
-            <input 
-              type="email" 
-              className="email-input" 
-              placeholder="Enter your email here" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <button className="continue-button" onClick={handleContinue}>
-              Continue
-            </button>
+        <input 
+          type="email" 
+          className="email-input" 
+          placeholder="Enter your email here" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-            <div className="divider">
-              <span className='divider-text'>or authorize with</span>
-            </div>
+        <button className="continue-button" onClick={handleContinue}>
+          Continue
+        </button>
 
-            <button onClick={handleGoogleLogin} className="google-button">
-              <img src={google} alt='Google icon' /> Continue with Google
-            </button>
+        <div className="divider">
+          <span className="divider-text">or authorize with</span>
+        </div>
+
+        <button onClick={handleGoogleLogin} className="google-button">
+          <img src={google} alt="Google icon" /> Continue with Google
+        </button>
       </div>
 
       <div className="login-right">
