@@ -1,6 +1,9 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
-
 module.exports = function (app) {
+  // In production, API calls should go directly to the server
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
+  
   app.use(
     '/api',
     createProxyMiddleware({
