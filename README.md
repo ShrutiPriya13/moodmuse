@@ -1,6 +1,39 @@
 # 🎵 MoodMuse
 
-**MoodMuse** is a web-based application that curates and recommends music based on the user's mood. Using a combination of machine learning, audio feature analysis, and user authentication, MoodMuse helps users discover the perfect tracks to match how they feel.
+A mood-based music recommendation and journaling application.
+
+## Deployment
+
+This project is deployed using GitHub Pages. The frontend is served from the `gh-pages` branch, while the backend API runs on a separate server.
+
+### Backend Setup
+
+1. Clone the repository:
+```bash
+git clone https://github.com/YOUR_USERNAME/moodmuse.git
+cd moodmuse/server
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up environment variables:
+Create a `.env` file in the server directory with the following variables:
+```
+MONGO_URI=your_mongodb_uri
+COOKIE_KEY=your_cookie_key
+```
+
+4. Start the server:
+```bash
+node index.js
+```
+
+### Frontend Access
+
+The frontend is available at `https://YOUR_USERNAME.github.io/moodmuse/`
 
 ---
 
