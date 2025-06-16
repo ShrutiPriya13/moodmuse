@@ -30,4 +30,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
           commit_message: 'Update GitHub Pages'
-          force_orphan: true
+          publish_branch: main
