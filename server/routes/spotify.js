@@ -1,3 +1,4 @@
+console.log("Spotify routes loaded"); // in spotify.js
 const express = require('express');
 const { spotifyApi, getAccessToken } = require('../config/spotify');
 const router = express.Router();

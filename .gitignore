@@ -30,3 +30,6 @@ ehthumbs.db
 Thumbs.db
 
 .vercel
+
+# Local Netlify folder
+.netlify

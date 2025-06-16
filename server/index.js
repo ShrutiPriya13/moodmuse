@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const serverless = require('serverless-http');
+const path = require('path');
+const { createServer } = require('http');
+const { Server } = require('socket.io');
 
 dotenv.config();
 
@@ -39,12 +42,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
+app.use('/api', (req, res, next) => {
+  next();
+});
 app.use('/auth', authRoutes);
 app.use('/api/songs', spotifyRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Serverless backend is running!');
-});
-
+// Export server
+module.exports = app;
 // ✅ Export the app wrapped with serverless-http
 module.exports = serverless(app);
