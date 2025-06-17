@@ -18,13 +18,19 @@ require('./auth/googleAuth'); // Passport config
 
 const app = express();
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+// MongoDB connection
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    console.log('MongoDB Connected');
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+    throw err;
+  }
+};
 
 // Middleware
 app.use(cors());
@@ -48,13 +54,65 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/api', (req, res, next) => {
-  next();
-});
 app.use('/auth', authRoutes);
 app.use('/api/songs', spotifyRoutes);
 
-// Export server
-module.exports = app;
-// ✅ Export the app wrapped with serverless-http
-module.exports = serverless(app);
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
+
+// Create handler for Netlify Functions
+const handler = async (event, context) => {
+  try {
+    // Connect to MongoDB for each request
+    await connectDB();
+    
+    // Create a new request object for express
+    const req = {
+      ...event,
+      body: event.body ? JSON.parse(event.body) : {},
+      headers: event.headers,
+      method: event.httpMethod,
+      query: event.queryStringParameters,
+      path: event.path
+    };
+
+    // Create a new response object
+    const res = {};
+    res.statusCode = 200;
+    res.headers = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
+    };
+
+    // Call express app
+    await new Promise((resolve, reject) => {
+      app(req, res, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+
+    return {
+      statusCode: res.statusCode,
+      headers: res.headers,
+      body: JSON.stringify(res.body)
+    };
+  } catch (error) {
+    console.error('Error in handler:', error);
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify({ message: 'Internal Server Error' })
+    };
+  }
+};
+
+module.exports = { handler };
