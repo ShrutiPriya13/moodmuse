@@ -1,0 +1,14 @@
+[build]
+  functions = "./"
+
+[functions]
+  node_version = "18"
+
+[functions.index.js]
+  memory = "1024"
+  timeout = "10"
+  environment = {
+    MONGO_URI = "${{secrets.MONGO_URI}}",
+    COOKIE_KEY = "${{secrets.COOKIE_KEY}}",
+    NODE_ENV = "production"
+  }

@@ -3,11 +3,12 @@ const passport = require('passport');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const serverless = require('serverless-http');
 const path = require('path');
-const { createServer } = require('http');
-const { Server } = require('socket.io');
+
+// Remove WebSocket dependencies since they won't work in Netlify Functions
+// const { createServer } = require('http');
+// const { Server } = require('socket.io');
 
 dotenv.config();
 
@@ -18,26 +19,31 @@ require('./auth/googleAuth'); // Passport config
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
 // Middleware
-app.use(cors({
-  origin: 'https://mood-muse-7j6sxi5r9-shrutis-projects-3226d360.vercel.app', // ✅ Use your deployed frontend domain
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Session configuration
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  secret: process.env.COOKIE_KEY,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
-    maxAge: 24 * 60 * 60 * 1000
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
+
+// Passport initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
