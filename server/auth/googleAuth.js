@@ -21,9 +21,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.NODE_ENV === 'production' ? 
-        "https://mood-muse-grmayv4zl-shrutis-projects-3226d360.vercel.app/auth/google/callback" : 
-        "http://localhost:5000/auth/google/callback"
+      callbackURL: "http://localhost:5000/auth/google/callback"
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
