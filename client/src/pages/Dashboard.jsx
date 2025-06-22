@@ -27,7 +27,7 @@ const Dashboard = () => {
         }
 
         // Check with server
-        const response = await fetch('http://localhost:5000/auth/current_user', {
+        const response = await fetch('https://moodmuse.onrender.com/auth/current_user', {
           method: 'GET',
           credentials: 'include',
           headers: {

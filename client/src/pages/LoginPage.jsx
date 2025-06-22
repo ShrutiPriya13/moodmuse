@@ -35,7 +35,7 @@ function LoginPage() {
       localStorage.removeItem('user');
       
       // Redirect to Google OAuth
-      const authUrl = 'http://localhost:5000/auth/google';
+      const authUrl = 'https://moodmuse.onrender.com/auth/google';
       window.location.href = authUrl;
     } catch (error) {
       console.error('Error initiating Google login:', error);
