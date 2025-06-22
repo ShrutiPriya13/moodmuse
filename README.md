@@ -5,7 +5,8 @@
 ---
 
 ## 🌐 Live Demo
-[Coming Soon]
+
+[Click here to view the live site]((https://moodmuse-gamma.vercel.app)
 
 ---
 
