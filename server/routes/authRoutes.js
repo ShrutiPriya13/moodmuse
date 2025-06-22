@@ -43,12 +43,26 @@ router.get(
           return res.redirect('/');
         }
         
-        // Redirect to dashboard with proper headers
-        res.redirect('http://localhost:3000/dashboard');
+        // Redirect to backend success page to ensure cookie is set before frontend redirect
+        res.redirect('/auth/success');
       });
     })(req, res, next);
   }
 );
+
+// Success route for post-OAuth cookie setting
+router.get('/success', (req, res) => {
+  res.send(`
+    <html>
+      <body>
+        <script>
+          window.location.href = 'https://moodmuse.vercel.app/dashboard';
+        </script>
+        <p>Redirecting...</p>
+      </body>
+    </html>
+  `);
+});
 
 // Logout route
 router.get('/logout', (req, res) => {
