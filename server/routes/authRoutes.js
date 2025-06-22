@@ -56,7 +56,7 @@ router.get('/success', (req, res) => {
     <html>
       <body>
         <script>
-          window.location.href = 'https://moodmuse.vercel.app/dashboard';
+          window.location.href = 'https://moodmuse-gamma.vercel.app/dashboard';
         </script>
         <p>Redirecting...</p>
       </body>
